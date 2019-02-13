@@ -7,6 +7,6 @@ void loop() {
   // put your main code here, to run repeatedly:
   if (Serial.available()) {
     Serial.println("I got something!!");
-    Serial.println(Serial.read());
+    Serial.println(Serial.readString());
   }
 }
