@@ -1,6 +1,12 @@
+
+#include <driver/dac.h>
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
+  
+  dac_output_enable(DAC_CHANNEL_1);
+  dac_output_voltage(DAC_CHANNEL_1, 200);
 }
 
 void loop() {
