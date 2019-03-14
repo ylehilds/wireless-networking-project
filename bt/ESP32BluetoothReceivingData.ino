@@ -1,23 +1,29 @@
+//This example code is in the Public Domain (or CC0 licensed, at your option.)
+//By Evandro Copercini - 2018
+//
+//This example creates a bridge between Serial and Classical Bluetooth (SPP)
+//and also demonstrate that SerialBT have the same functionalities of a normal Serial
 
-#include <driver/dac.h>
+#include "BluetoothSerial.h"
 
-int output = 0;
+#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
+#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
+#endif
+
+BluetoothSerial SerialBT;
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(115200);
-  
-  dac_output_enable(DAC_CHANNEL_1);
+  SerialBT.begin("ESP32test"); //Bluetooth device name
+  Serial.println("The device started, now you can pair it with bluetooth!");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   if (Serial.available()) {
-//   Serial.println("I got something!!");
-//    Serial.println(Serial.readString());
-    output = Serial.read();
-//    Serial.println(output);
-    dac_output_voltage(DAC_CHANNEL_1, output);
-    delayMicroseconds(90);
+    SerialBT.write(Serial.read());
   }
+  if (SerialBT.available()) {
+    Serial.write(SerialBT.read());
+  }
+  delay(20);
 }
