@@ -12,7 +12,6 @@ python setup.py install
 
 import bluetooth as bt
 from pprint import pprint
-import pdb; pdb.set_trace()
 
 devices = bt.discover_devices()
 #   now you get the device BT address and put it in the command below to find the port you need to use in this script

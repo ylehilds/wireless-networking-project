@@ -1,5 +1,5 @@
 import wave
-import serial
+# import serial
 from struct import pack,unpack 
 # import serial.tools.list_ports
 import bluetooth
@@ -20,37 +20,37 @@ def readbytes():
         time.sleep(.001)
     return output
 
-bd_addr = "30:AE:A4:D4:8D:52"
+bd_addr ="cc:50:e3:80:a5:06"
 port = 1
-sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-sock.connect((bd_addr, port))
-# sock.send("hello!!")
-# sock.close()
+try:
+    sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    sock.connect((bd_addr, port))
+    # sock.send("hello!!")
+    # sock.close()
 
-wav = wave.open("sorry_dave.wav", mode="rb")
-# com = getUSBDevice()
-framerate = wav.getframerate()
-print("framerate: ", framerate)
-# ser = serial.Serial(port=com, baudrate=115200)
-# time.sleep(.1)
+    wav = wave.open("../sorry_dave.wav", mode="rb")
+    # com = getUSBDevice()
+    framerate = wav.getframerate()
+    print("framerate: ", framerate)
+    # ser = serial.Serial(port=com, baudrate=115200)
+    # time.sleep(.1)
 
-# print(readbytes())
-while True:
-    x = time.time()
-    frame = wav.readframes(framerate)
-    if frame == b'':
-        break
-    # print(frame)
-    # frame = unpack("<B", frame)[0]
+    # print(readbytes())
+    while True:
+        x = time.time()
+        frame = wav.readframes(framerate)
+        if frame == b'':
+            break
+        # print(frame)
+        # frame = unpack("<B", frame)[0]
 
-    # ser.write(frame)
-    sock.send(frame)
-    T = 1 - (time.time() - x)
-    time.sleep(T)
-    print("time: ", time.time() - x)
-    # ser.write(pack("<cc", frame, b'\n'))
-    # ser.write(frame)
-    # readbytes()
-
+        # ser.write(frame)
+        sock.send(frame)
+        T = 1 - (time.time() - x)
+        time.sleep(T)
+        print("time: ", time.time() - x)
+        # ser.write(pack("<cc", frame, b'\n'))
+        # ser.write(frame)
+        # readbytes()
 finally:
     sock.close()

@@ -10,11 +10,11 @@
 '''
 
 #!/usr/bin/python
-
+ 
 import bluetooth
 
 def connect ():
-    bd_addr = "30:AE:A4:D4:8D:52"
+    bd_addr = "cc:50:e3:80:a5:06"
     port = 1
     sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     sock.connect((bd_addr, port))
