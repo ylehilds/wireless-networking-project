@@ -20,10 +20,13 @@ void setup() {
 
 void loop() {
   if (Serial.available()) {
+    Serial.println("inside Serial.available()");
     SerialBT.write(Serial.read());
   }
   if (SerialBT.available()) {
-    Serial.write(SerialBT.read());
+    byte tempByte = SerialBT.read();
+    Serial.write(tempByte);
+    SerialBT.write(tempByte);
   }
   delay(20);
 }
