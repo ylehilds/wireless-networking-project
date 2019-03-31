@@ -25,7 +25,9 @@ void loop() {
   }
   if (SerialBT.available()) {
     byte tempByte = SerialBT.read();
+    // wites data to Serial arduino
     Serial.write(tempByte);
+    // writes data back to BT serial which python script is listening to
     SerialBT.write(tempByte);
   }
   delay(20);
