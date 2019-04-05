@@ -1,0 +1,15 @@
+{
+    "python.formatting.provider": "yapf",
+    "sync-rsync.remote": "pi@10.37.162.169:/home/pi/Documents/wireless-networking-project/",
+    "sync-rsync.local": "/mnt/c/Users/thear/Documents/School/temp/wireless-networking-project/",
+    "sync-rsync.onSave": true,
+    "sync-rsync.executableShell": "C:\\Windows\\System32\\bash.exe",
+    "sync-rsync.exclude": [
+        ".vscode",
+        "env/",
+        "*.pyc",
+        "__pycache__/"
+    ],
+    "sync-rsync.shell": "ssh -o \"ProxyCommand ssh -A ssh.et.byu.edu -W %h:%p\"",
+    "sync-rsync.delete": true
+}

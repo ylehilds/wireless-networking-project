@@ -1,5 +1,5 @@
 import wave
-# import serial
+import sys
 from struct import pack,unpack 
 # import serial.tools.list_ports
 import bluetooth
@@ -21,7 +21,10 @@ def readbytes():
     return output
 
 bd_addr ="cc:50:e3:80:a5:06"
+# bd_addr = "30:AE:A4:D4:8D:52"
+
 port = 1
+x = None
 try:
     sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     sock.connect((bd_addr, port))
@@ -32,25 +35,16 @@ try:
     # com = getUSBDevice()
     framerate = wav.getframerate()
     print("framerate: ", framerate)
-    # ser = serial.Serial(port=com, baudrate=115200)
-    # time.sleep(.1)
 
-    # print(readbytes())
+    count = 0
+    
+    frame = wav.readframes(512)
     while True:
-        x = time.time()
-        frame = wav.readframes(framerate)
         if frame == b'':
             break
-        # print(frame)
-        # frame = unpack("<B", frame)[0]
-
-        # ser.write(frame)
         sock.send(frame)
-        T = 1 - (time.time() - x)
-        time.sleep(T)
-        print("time: ", time.time() - x)
-        # ser.write(pack("<cc", frame, b'\n'))
-        # ser.write(frame)
-        # readbytes()
+        data = sock.recv(16)
+        print("next")
+        frame = wav.readframes(256)
 finally:
     sock.close()
