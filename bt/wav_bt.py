@@ -25,6 +25,7 @@ bd_addr ="cc:50:e3:80:a5:06"
 
 port = 1
 x = None
+paused = False
 try:
     sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     sock.connect((bd_addr, port))
@@ -40,11 +41,17 @@ try:
     
     frame = wav.readframes(512)
     while True:
-        if frame == b'':
-            break
-        sock.send(frame)
-        data = sock.recv(16)
-        print("next")
-        frame = wav.readframes(256)
+        if not paused:
+            if frame == b'':
+                break
+            sock.send(frame)
+            frame = wav.readframes(256)
+
+        data = sock.recv(1) 
+        print("recieved frame ", data)
+        if "p" == data.decode("utf-8"):
+            paused = not paused
+            if not paused: # unpausing the audio stream
+                frame = wav.readframes(512)
 finally:
     sock.close()

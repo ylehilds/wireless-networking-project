@@ -11,13 +11,21 @@
 #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
 #endif
 
+#define DELAY 50
+
 BluetoothSerial SerialBT;
+int playPause = 22; 
+//int next = 23;
+//int prev = 21;
 
 void setup() {
   Serial.begin(115200);
   SerialBT.begin("ESP32test"); //Bluetooth device name
   Serial.println("The device started, now you can pair it with bluetooth!");
   dac_output_enable(DAC_CHANNEL_1);
+//  pinMode(playPause, INPUT);
+//  pinMode(next, INPUT);
+//  pinMode(prev, INPUT);
 
 }
 
@@ -35,9 +43,36 @@ void loop() {
       count = 0;
     }
   }
-//  else if (requested) {
-//    SerialBT.write('k');
-//    requested = false;
+  checkButtons();
+//  int pp = digitalRead(playPause);
+//  Serial.println(pp);
+//  if (pp) {
+//    SerialBT.write('p');
 //  }
-//  delay(20);
+}
+
+int ppState = 0;
+unsigned long ppDebounce = 0;
+int ppReading = 0;
+bool ppMsgSent = false;
+
+void checkButtons() {
+  ppReading = digitalRead(playPause);
+  if (ppReading != ppState){
+    ppDebounce = millis();
+    ppMsgSent = false;
+  }
+//  Serial.print("ppState: ");
+//  Serial.print(ppState);
+//  Serial.print(" ppReading: ");
+//  Serial.print(ppReading);
+//  Serial.print(" time: ");
+//  Serial.println(millis() - ppDebounce);
+  if (millis() - ppDebounce > DELAY) {
+    if (!ppMsgSent && ppState == HIGH) {
+      SerialBT.write('p');
+      ppMsgSent = true;
+    }
+  }
+  ppState = ppReading;
 }
