@@ -53,5 +53,9 @@ try:
             paused = not paused
             if not paused: # unpausing the audio stream
                 frame = wav.readframes(512)
+        elif "n" == data.decode("utf-8"):
+            print("next")
+        elif "q" == data.decode("utf-8"):
+            print("prev")
 finally:
     sock.close()

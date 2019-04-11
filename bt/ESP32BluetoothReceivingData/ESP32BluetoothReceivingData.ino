@@ -15,8 +15,8 @@
 
 BluetoothSerial SerialBT;
 int playPause = 22; 
-//int next = 23;
-//int prev = 21;
+int next = 23;
+int prev = 21;
 
 void setup() {
   Serial.begin(115200);
@@ -52,9 +52,18 @@ void loop() {
 }
 
 int ppState = 0;
+int prState = 0;
+int nState = 0;
 unsigned long ppDebounce = 0;
+unsigned long prDebounce = 0;
+unsigned long nDebounce = 0;
 int ppReading = 0;
+int prReading = 0;
+int nReading = 0;
+
 bool ppMsgSent = false;
+bool prMsgSent = false;
+bool nMsgSent = false;
 
 void checkButtons() {
   ppReading = digitalRead(playPause);
@@ -62,12 +71,6 @@ void checkButtons() {
     ppDebounce = millis();
     ppMsgSent = false;
   }
-//  Serial.print("ppState: ");
-//  Serial.print(ppState);
-//  Serial.print(" ppReading: ");
-//  Serial.print(ppReading);
-//  Serial.print(" time: ");
-//  Serial.println(millis() - ppDebounce);
   if (millis() - ppDebounce > DELAY) {
     if (!ppMsgSent && ppState == HIGH) {
       SerialBT.write('p');
@@ -75,4 +78,30 @@ void checkButtons() {
     }
   }
   ppState = ppReading;
+
+    prReading = digitalRead(prev);
+  if (prReading != prState){
+    prDebounce = millis();
+    prMsgSent = false;
+  }
+  if (millis() - prDebounce > DELAY) {
+    if (!prMsgSent && prState == HIGH) {
+      SerialBT.write('q');
+      prMsgSent = true;
+    }
+  }
+  prState = prReading;
+
+    nReading = digitalRead(next);
+  if (nReading != nState){
+    nDebounce = millis();
+    nMsgSent = false;
+  }
+  if (millis() - nDebounce > DELAY) {
+    if (!nMsgSent && nState == HIGH) {
+      SerialBT.write('n');
+      nMsgSent = true;
+    }
+  }
+  nState = nReading;
 }
