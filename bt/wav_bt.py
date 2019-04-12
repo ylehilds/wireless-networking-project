@@ -1,74 +1,69 @@
 import wave
 import sys
 from struct import pack,unpack 
-# import serial.tools.list_ports
 import bluetooth
 import time
+import os
 
-# def getUSBDevice():
-#     # prints available devices
-#     x = serial.tools.list_ports.comports()
-#     for device in range(len(x)):
-#         print(x[device])
-#         if "CP210" in x[device].description:
-#             return x[device].device
 
-def readbytes():
-    output = b''
-    while ser.in_waiting:
-        output += ser.read(size=ser.in_waiting)
-        time.sleep(.001)
-    return output
+class BTSpeaker:
+    bd_addr ="cc:50:e3:80:a5:06"
+    # bd_addr = "30:AE:A4:D4:8D:52"
 
-bd_addr ="cc:50:e3:80:a5:06"
-port = 1
-x = None
-try:
-    sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-    sock.connect((bd_addr, port))
-    # sock.send("hello!!")
-    # sock.close()
+    port = 1
+    paused = False
+    newsong = False
+    path = sys.argv[1]
+    files = os.listdir(path)
+    wav = None
+    frame = None
 
-    wav = wave.open("../sorry_dave.wav", mode="rb")
-    # com = getUSBDevice()
-    framerate = wav.getframerate()
-    print("framerate: ", framerate)
+    def __init__(self):
+        self.sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+        self.sock.connect((self.bd_addr, self.port))
 
-    count = 0
-    while True:
-        frame = wav.readframes(512)
-        if frame == b'':
-            break
-        # print(frame)
-        # frame = unpack("<B", frame)[0]
+        self.loadWave()
 
-        # ser.write(frame)
-        sock.send(frame)
-        data = sock.recv(16)
-        print("next")
-        # x = time.time()
-        #         # Look for the response
-        # amount_received = 0
-        # amount_expected = len(frame)
+    def __del__(self):
+        self.wav.close()
+        self.sock.close()
 
-        # while amount_received < amount_expected:
-        #     data = sock.recv(16)
-        #     y  = time.time() - x
-        #     print("time: ", y, " approx. time per byte: ", y / 512, " max hz: ", 1.0 / (y/512))
-        #     sys.exit()
-            
-        #     if x is None:
-        #         x = time.time()
-        #     elif time.time()  - x > 1.0:
-        #         sys.exit()
-        #     count += 1
-        #     amount_received += len(data)
-            # print("count: ", count, " ", sys.stderr, 'received "%s"' % data)
-        # T = 1 - (time.time() - x)
-        # time.sleep(T)
-        # print("time: ", time.time() - x)
-        # ser.write(pack("<cc", frame, b'\n'))
-        # ser.write(frame)
-        # readbytes()
-finally:
-    sock.close()
+    def loadWave(self):
+        print(self.path+self.files[0])
+        try:
+            self.wav.close()
+        except:
+            # print("failed")
+            pass
+        self.wav = wave.open(self.path+self.files[0], mode="rb")
+        self.newsong = True
+        self.frame = self.wav.readframes(512)
+        # print(self.frame)
+
+    def run(self):
+        while True:
+            if not self.paused:
+                if self.frame == b'':
+                    self.files = self.files[1:] + [self.files[0]]
+                    self.loadWave()
+                    # break
+                self.sock.send(self.frame)
+                self.newsong= False
+                if not self.newsong:
+                    self.frame = self.wav.readframes(256)
+
+            data = self.sock.recv(1) 
+            if "p" == data.decode("utf-8"):
+                self.paused = not self.paused
+                if not self.paused: # unpausing the audio stream
+                    self.frame = self.wav.readframes(512)
+            elif "n" == data.decode("utf-8"):
+                self.files = self.files[1:] + [self.files[0]]
+                self.loadWave()
+            elif "q" == data.decode("utf-8"):
+                self.files = [self.files[-1]] + self.files[:-1]
+                self.loadWave()
+
+if __name__ == "__main__":
+    bt = BTSpeaker()
+    bt.run()
