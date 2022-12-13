@@ -11,4 +11,5 @@ Wireless Networking Project
 7. python setup.py install
 
 once all libraries are installed correctly, then run the python file like this:
-8. 
+8. python C:\Users\lehid\OneDrive\Documents\repos\wireless-networking-project\bt\wav_bt.py C:\Users\lehid\OneDrive\Documents\repos\wireless-networking-project\sounds\
+
