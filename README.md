@@ -15,7 +15,8 @@ once all libraries are installed correctly, then run the python file like this:
 9. ```python C:\Users\lehid\OneDrive\Documents\repos\wireless-networking-project\bt\wav_bt.py C:\Users\lehid\OneDrive\Documents\repos\wireless-networking-project\sounds\```
 
 10. now there should be a complete bluetooth interaction between ESP32 and Windows python script, where ESP32 buttons sends commands like: p,q,n
+```
     ESP32: pin playPause = 22; Python: 'p'
     ESP32: pin next = 23; Python: 'n'
     ESP32: pin prev = 21; Python: 'q'
-
+```
