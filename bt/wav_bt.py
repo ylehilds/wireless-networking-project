@@ -18,7 +18,7 @@ import os
 
 
 class BTSpeaker:
-    # bd_addr ="cc:50:e3:80:a5:06" # Clayons esp32 bluetooth address
+    # bd_addr ="cc:50:e3:80:a5:06" # Claytons esp32 bluetooth address
     bd_addr = "30:AE:A4:D4:8D:52" # lehis esp32 bluetooth address
 
     port = 1
