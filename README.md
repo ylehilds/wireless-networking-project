@@ -20,4 +20,4 @@ once all libraries are installed correctly, then run the python file like this:
     ESP32: pin next = 23; Python: 'n'
     ESP32: pin prev = 21; Python: 'q'
 ```
-PS: Schematic and discussion how this project came to be is found in the BluetoothProjectReport.pdf file
+PS: Schematic and discussion how this project came to be is found in the BluetoothProjectReport.pdf / FinalProjectSlides.pdf file
