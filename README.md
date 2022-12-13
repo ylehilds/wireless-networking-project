@@ -8,7 +8,7 @@ Wireless Networking Project
 4. Install "Visual Studio Build Tools 2017", check "Visual C++ build tools" and "Universal Windows Platform build tools"
 5. ```git clone https://github.com/pybluez/pybluez```
 6. ```cd pybluez```
-7. ```python setup.py install```
+7. ```python setup.py install``` you may need to add --user flag at the end for this to work
 
 once all libraries are installed correctly, then run the python file like this:
 8. on Windows connect to ESP32 bluetooth by name, which should be: "ESP32test" then run the below python script
