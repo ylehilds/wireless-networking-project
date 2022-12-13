@@ -1,3 +1,14 @@
+'''
+  https://stackoverflow.com/questions/7485750/sending-messages-or-datas-with-bluetooth-via-python
+  go into python terminal mode with command: python
+  >>> from bluetooth import *
+  >>> from pprint import pprint
+  >>> devices = discover_devices()
+  now you get the device BT address and put it in the command below to find the port you need to use in this script
+  >>> devices
+  you may have a few bluetooth addresses try different ones until you get the correct one, for my bluetooth ESP32 address, the correct address is: "30:AE:A4:D4:8D:52" for example and that is what you assign to variable bd_addr on line 22
+'''
+
 import wave
 import sys
 from struct import pack,unpack 
