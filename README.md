@@ -21,3 +21,4 @@ once all libraries are installed correctly, then run the python file like this:
     ESP32: pin prev = 21; Python: 'q'
 ```
 PS: Schematic and discussion how this project came to be is found in the BluetoothProjectReport.pdf / FinalProjectSlides.pdf / breadboardSchematic.png file
+PS2: add more wav clip sounds from here: https://www.wavsource.com/movies/movies1.htm I have found that it works well with this project.
