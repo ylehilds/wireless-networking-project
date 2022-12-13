@@ -20,5 +20,5 @@ Wireless Networking Project
     ESP32: pin next = 23; Python: 'n'
     ESP32: pin prev = 21; Python: 'q'
 ```
-PS: Schematic and discussion how this project came to be is found in the BluetoothProjectReport.pdf / FinalProjectSlides.pdf / breadboardSchematic.png file
+PS: Schematic and discussion how this project came to be is found in the BluetoothProjectReport.pdf / FinalProjectSlides.pdf / breadboardSchematic.png file or look at schematic folder which contain the schematic and software to see it.
 <p>PS2: add more wav clip sounds from here: https://www.wavsource.com/movies/movies1.htm I have found that it works well with this project.</p>
