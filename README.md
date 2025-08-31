@@ -116,7 +116,7 @@ A portfolio-ready wireless networking build that connects an **ESP32** to a **Wi
 - **Clear artifacts:** Schematics, photos, report, and slides make the project easy to understand and demo.
 - **Extendable:** Swap audio formats, add OLED status, rework to BLE GATT, port client to Linux/macOS, or add a mobile app.
 
-# Notes
+# Alternative Setup Instructions (My Notes)
 
 1. The file to push to ESP32 is located at: wireless-networking-project/bt/ESP32BluetoothReceivingData/ESP32BluetoothReceivingData.ino
 2. The file to be running on a Windows 11 + is located at: wireless-networking-project/bt/wav_bt.py. You need python 3 and bluetooth library, follow these steps to make sure you have the correct python libraries:
